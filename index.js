@@ -1,7 +1,7 @@
 'use strict'
 
 const {
-  assign,
+  merge,
   forEach,
   isArray,
   isPlainObject,
@@ -45,7 +45,7 @@ class ServerlessMergeConfig {
   assignValue (collection, value) {
     if (isPlainObject(value)) {
       // Only merge objects
-      assign(collection, value)
+      merge(collection, value)
     }
   }
 }
