@@ -1,11 +1,14 @@
 {
-  "name": "@cruglobal/serverless-merge-config",
-  "version": "1.1.0",
+  "name": "@axel-springer-kugawana/serverless-merge-config",
+  "version": "1.2.0",
   "description": "Serverless merge config adds the ability to merge configuration after serverless variables have been evaluated.",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/CruGlobal/serverless-merge-config.git"
+    "url": "https://github.com/axel-springer-kugawana/serverless-merge-config.git"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
   },
   "engines": {
     "node": ">= 6.10"
