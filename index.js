@@ -1,7 +1,7 @@
 'use strict'
 
 const {
-  merge,
+  mergeWith,
   forEach,
   isArray,
   isPlainObject,
@@ -24,28 +24,33 @@ class ServerlessMergeConfig {
     this.deepMerge(this.serverless.service)
   }
 
-  deepMerge (obj) {
-    forEach(obj, (value, key, collection) => {
+  deepMerge (serverlessConfig) {
+    forEach(serverlessConfig, (value, key, collection) => {
       if (isPlainObject(value) || isArray(value)) {
         this.deepMerge(value)
       }
       if (key === '$<<') {
         if (isArray(value)) {
           value.forEach((subValue) => {
-            this.assignValue(collection, subValue)
+            this.mergeValue(collection, subValue)
           })
         } else {
-          this.assignValue(collection, value)
+          this.mergeValue(collection, value)
         }
-        unset(obj, key)
+        unset(serverlessConfig, key)
       }
     })
   }
 
-  assignValue (collection, value) {
+  mergeValue (collection, value) {
+    const customizer = (objValue, srcValue) => {
+      if (isArray(objValue)) {
+        return objValue.concat(srcValue)
+      }
+    }
+
     if (isPlainObject(value)) {
-      // Only merge objects
-      merge(collection, value)
+      mergeWith(collection, value, customizer)
     }
   }
 }

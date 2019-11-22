@@ -81,4 +81,11 @@ describe('serverless-merge-config', () => {
     plugin.mergeConfig()
     expect(plugin.serverless.service).toEqual({provider: {name: 'aws'}})
   })
+
+  it('should concatenate object properties which are arrays', () => {
+    let config = {provider: {name: 'aws', fooProp: [{barProp: 'bar'}], '$<<': {fooProp: [{bazProp: 'baz'}]}}}
+    let plugin = constructPlugin(config)
+    plugin.mergeConfig()
+    expect(plugin.serverless.service).toEqual({provider: {name: 'aws', fooProp: [{barProp: 'bar'}, {bazProp: 'baz'}]}})
+  })
 })
